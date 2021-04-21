@@ -75,7 +75,6 @@
 	 Link,
 	 List,
 	 ListStyle,
-	 MathType,
 	 MediaEmbed,
 	 Paragraph,
 	 PasteFromOffice,
@@ -90,17 +89,6 @@
 	 SmartyTags
  ];
  
-//  ClassicEditor
-//     .create( document.querySelector( '#editor' ), {
-//         plugins: [ Essentials, Paragraph, Bold, Italic , SmartyTags ],
-//         toolbar: [ 'bold', 'italic', 'smartyTags' ]
-//     } )
-//     .then( editor => {
-//         console.log( 'Editor was initialized', editor );
-//     } )
-//     .catch( error => {
-//         console.error( error.stack );
-//     } );
 
  export default Editor;
  

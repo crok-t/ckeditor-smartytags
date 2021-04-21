@@ -13,6 +13,14 @@ import ToolbarView from '@ckeditor/ckeditor5-ui/src/toolbar/toolbarview';
 
 
 class SmartyTags extends Plugin {
+
+    constructor( editor) {
+        super(editor);
+
+        editor.config.define('smartyTags', {
+            callback: null
+        })
+    }
     init() {
         const editor = this.editor;
 
@@ -66,7 +74,17 @@ class SmartyTags extends Plugin {
             //         editor.model.insertContent( textElement , editor.model.document.selection );
             //     } );
             // } );
-
+            buttonFoo.on( 'execute', () => {
+                    //console.log("1");
+                    //console.log(editor.config.get('smartyTags.callback'));
+                    const data = window[editor.config.get('smartyTags.callback')]();
+                    //console.log("data");
+                    const textElement = new Text( '{'+ data + '}' );
+                    editor.model.insertContent( textElement , editor.model.document.selection );
+            });
+            // buttonBar.on( 'execute', () => {
+            //         //  IfCondition();
+            // });
             toolbar.items.add( buttonFoo );
 
             toolbar.items.add( buttonBar );
