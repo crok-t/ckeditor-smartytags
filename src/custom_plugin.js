@@ -18,7 +18,7 @@ class SmartyTags extends Plugin {
         super(editor);
 
         editor.config.define('smartyTags', {
-            callback: null
+            callback: 'smartyTagPopup'
         })
     }
     init() {
@@ -27,8 +27,8 @@ class SmartyTags extends Plugin {
         editor.ui.componentFactory.add( 'smartyTags', locale => {
             // const view = new ButtonView( locale );
             const toolbar = new ToolbarView( locale );
-            const buttonFoo = new ButtonView( locale );
-            const buttonBar = new ButtonView( locale );
+            const buttonPersonalMsg = new ButtonView( locale );
+            const buttonIfCondition = new ButtonView( locale );
 
 
             // view.set( {
@@ -38,13 +38,13 @@ class SmartyTags extends Plugin {
             //     tooltip: true
             // } );
 
-            buttonFoo.set( {
+            buttonPersonalMsg.set( {
                 label: 'Personalized Message',
                 withText: true,
                 tooltip: true
             } );
             
-            buttonBar.set( {
+            buttonIfCondition.set( {
                 label: 'IF Condition',
                 withText: true,
                 tooltip: true
@@ -74,7 +74,7 @@ class SmartyTags extends Plugin {
             //         editor.model.insertContent( textElement , editor.model.document.selection );
             //     } );
             // } );
-            buttonFoo.on( 'execute', () => {
+            buttonPersonalMsg.on( 'execute', () => {
                     //console.log("1");
                     //console.log(editor.config.get('smartyTags.callback'));
                     const data = window[editor.config.get('smartyTags.callback')]();
@@ -82,12 +82,12 @@ class SmartyTags extends Plugin {
                     const textElement = new Text( '{'+ data + '}' );
                     editor.model.insertContent( textElement , editor.model.document.selection );
             });
-            // buttonBar.on( 'execute', () => {
+            // buttonIfCondition.on( 'execute', () => {
             //         //  IfCondition();
             // });
-            toolbar.items.add( buttonFoo );
+            toolbar.items.add( buttonPersonalMsg );
 
-            toolbar.items.add( buttonBar );
+            toolbar.items.add( buttonIfCondition );
 
             return toolbar;
         } );
