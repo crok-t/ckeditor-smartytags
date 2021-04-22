@@ -77,10 +77,12 @@ class SmartyTags extends Plugin {
             buttonPersonalMsg.on( 'execute', () => {
                     //console.log("1");
                     //console.log(editor.config.get('smartyTags.callback'));
-                    const data = window[editor.config.get('smartyTags.callback')]();
+                    const promise = window[editor.config.get('smartyTags.callback')]();
                     //console.log("data");
-                    const textElement = new Text( '{'+ data + '}' );
-                    editor.model.insertContent( textElement , editor.model.document.selection );
+                    promise.then(function(result){
+                        const textElement = new Text( '{'+ result + '}' );
+                        editor.model.insertContent( textElement , editor.model.document.selection );    
+                    });
             });
             // buttonIfCondition.on( 'execute', () => {
             //         //  IfCondition();
