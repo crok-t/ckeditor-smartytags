@@ -20,7 +20,10 @@ class SmartyTags extends Plugin {
         super(editor);
 
         editor.config.define('smartyTags', {
-            callback: 'smartyTagPopup'
+            msgcallback: 'smartyTagPopup'
+        })
+        editor.config.define('smartyTags', {
+            ifcallback: 'IfTagPopup'
         })
     }
     init() {
@@ -84,7 +87,7 @@ class SmartyTags extends Plugin {
             buttonPersonalMsg.on( 'execute', () => {
                     //console.log("1");
                     //console.log(editor.config.get('smartyTags.callback'));
-                    const promise = window[editor.config.get('smartyTags.callback')]();
+                    const promise = window[editor.config.get('smartyTags.msgcallback')]();
                     //console.log("data");
                     promise.then(function(result){
                         const textElement = new Text( '{'+ result + '}' );
@@ -94,7 +97,7 @@ class SmartyTags extends Plugin {
             buttonIfCondition.on( 'execute', () => {
                 //console.log("1");
                 //console.log(editor.config.get('smartyTags.callback'));
-                const promise = window[editor.config.get('smartyTags.callback')]();
+                const promise = window[editor.config.get('smartyTags.ifcallback')]();
                 //console.log("data");
                 promise.then(function(result){
                     const textElement = new Text( '{'+ result + '}' );
