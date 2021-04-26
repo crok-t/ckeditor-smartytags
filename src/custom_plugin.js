@@ -10,6 +10,8 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 
 import ToolbarView from '@ckeditor/ckeditor5-ui/src/toolbar/toolbarview';
 
+import ToolbarSeparatorView from '@ckeditor/ckeditor5-ui/src/toolbar/toolbarseparatorview';
+
 
 
 class SmartyTags extends Plugin {
@@ -29,6 +31,7 @@ class SmartyTags extends Plugin {
             const toolbar = new ToolbarView( locale );
             const buttonPersonalMsg = new ButtonView( locale );
             const buttonIfCondition = new ButtonView( locale );
+            const buttonEndIfCondition = new ButtonView( locale );
 
 
             // view.set( {
@@ -49,7 +52,11 @@ class SmartyTags extends Plugin {
                 withText: true,
                 tooltip: true
             } );
-            
+            buttonEndIfCondition.set( {
+                label: 'EndIF',
+                withText: true,
+                tooltip: true
+            } );
             
             // Callback executed once the image is clicked.
             // view.on( 'execute', () => {
@@ -84,12 +91,29 @@ class SmartyTags extends Plugin {
                         editor.model.insertContent( textElement , editor.model.document.selection );    
                     });
             });
-            // buttonIfCondition.on( 'execute', () => {
-            //         //  IfCondition();
-            // });
+            buttonIfCondition.on( 'execute', () => {
+                //console.log("1");
+                //console.log(editor.config.get('smartyTags.callback'));
+                const promise = window[editor.config.get('smartyTags.callback')]();
+                //console.log("data");
+                promise.then(function(result){
+                    const textElement = new Text( '{'+ result + '}' );
+                    editor.model.insertContent( textElement , editor.model.document.selection );    
+                });
+        });
+            buttonEndIfCondition.on( 'execute', () => {
+                const textElement = new Text( '{EndIF}' );
+                editor.model.insertContent( textElement , editor.model.document.selection );
+            });
             toolbar.items.add( buttonPersonalMsg );
 
+            toolbar.items.add( new ToolbarSeparatorView(locale) );
+
             toolbar.items.add( buttonIfCondition );
+
+            toolbar.items.add( new ToolbarSeparatorView(locale) );
+
+            toolbar.items.add( buttonEndIfCondition );
 
             return toolbar;
         } );
