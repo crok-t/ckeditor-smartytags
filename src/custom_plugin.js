@@ -100,12 +100,12 @@ class SmartyTags extends Plugin {
                 const promise = window[editor.config.get('smartyTags.ifcallback')]();
                 //console.log("data");
                 promise.then(function(result){
-                    const textElement = new Text( '{'+ result + '}' );
+                    const textElement = new Text(  result + '{beginif}' );
                     editor.model.insertContent( textElement , editor.model.document.selection );    
                 });
         });
             buttonEndIfCondition.on( 'execute', () => {
-                const textElement = new Text( '{EndIF}' );
+                const textElement = new Text( '{endif}' );
                 editor.model.insertContent( textElement , editor.model.document.selection );
             });
             toolbar.items.add( buttonPersonalMsg );
